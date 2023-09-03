@@ -1,0 +1,157 @@
+<div class="snippet" *ngIf="!cart">
+  <mat-spinner></mat-spinner>
+</div>
+<div *ngIf="cart">
+  <section class="h-100">
+    <div class="container h-100 py-5">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-10">
+          <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3 class="fw-normal mb-0 text-black">Shopping Cart</h3>
+          </div>
+          <div class="empty" *ngIf="cart.products.length < 1">
+            Cart is empty <a [routerLink]="['/home']">back to shop</a>
+          </div>
+          <div class="card rounded-3 mb-4" *ngFor="let item of cart.products">
+            <div class="card-body p-4">
+              <div
+                class="row d-flex justify-content-between align-items-center"
+              >
+                <div class="col-md-2 col-lg-2 col-xl-2">
+                  <img
+                    *ngIf="item.img_url.length > 0"
+                    src="{{ imgPath + item.img_url[0].url }}"
+                    class="img-fluid rounded-3"
+                    alt="Cotton T-shirt"
+                  />
+                  <img
+                    *ngIf="item.img_url.length < 1"
+                    src="{{ imgPath + noImg }}"
+                    class="img-fluid rounded-3"
+                    alt="No img"
+                  />
+                </div>
+                <div class="col-md-3 col-lg-3 col-xl-3">
+                  <p class="lead fw-normal mb-2">{{ item.title }}</p>
+                </div>
+                <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                  <div>
+                    <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                      <button
+                        onclick="this.parentNode.querySelector('input[type=number]').stepDown()"
+                        class="btn btn-link px-2"
+                        (click)="replaceQuantity(item,quantity.value)"
+                      >
+                        <mat-icon>remove</mat-icon>
+                      </button>
+                      <input
+                      #quantity
+                        class="qty-imp"
+                        min="0"
+                        max="{{ item.quantity }}"
+                        value="{{ item.cartQty }}"
+                        type="number"
+                        disabled
+                      />
+                      <button
+                        onclick="this.parentNode.querySelector('input[type=number]').stepUp()"
+                        class="btn btn-link px-2"
+                        (click)="replaceQuantity(item,quantity.value)"
+                      >
+                        <mat-icon>add</mat-icon>
+                      </button>
+                    </div>
+                    <p style="text-align: center">
+                      In stock: {{ item.quantity }}
+                    </p>
+                  </div>
+                </div>
+                <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                  <h5 class="mb-0">
+                    <s>€{{ item.list_price }} </s>
+                    <span>€{{ item.discount_price }}</span>
+                  </h5>
+                </div>
+                <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                  <button class="btn btn-link" (click)="removeCart(item)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card mb-4">
+            <div
+              *ngIf="cart.discount.length < 1"
+              class="card-body p-4 d-flex flex-row"
+            >
+              <div class="form-outline flex-fill">
+                <input
+                  #discountCode
+                  type="text"
+                  id="form1"
+                  class="form-control form-control-lg"
+                  (focus)="disountNotFind=''"
+                />
+                <p class=" error" >{{disountNotFind}}</p>
+                <label class="form-label" for="form1">Discound code</label>
+                
+              </div>
+              <button
+                type="button"
+                class="btn btn-outline-warning btn-lg ms-3"
+                (click)="applyDiscountCode(discountCode.value)"
+              >
+                Apply
+              </button>
+            </div>
+           
+            <div *ngIf="cart.discount.length > 0">
+              
+             <div class="card-body p-4 d-flex flex-row"
+             *ngFor="let disc of cart.discount">
+             
+                <div class="form-outline flex-fill">
+                  <h4>
+                    <b>{{ disc.code }}</b>
+                  </h4>
+                  <p>{{ disc.description }}</p>
+                </div>
+                <div class="form-outline flex-fill">
+                  {{ disc.discont_percentual }}%
+                </div>
+                <div class="form-outline flex-fill">
+                  <button (click)="removeDiscountCode(disc)" class="btn btn-link">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+
+          <div class="card">
+            <div class="card-body">
+              <div class="card-total">
+                <h3>Total €{{ cart.total }}</h3>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <a  [routerLink]="['/checkout']" >
+             <!--- <button 
+              
+              type="button" class="btn btn-warning btn-block btn-lg"
+             >
+                Proceed to Pay
+              </button>-->
+            </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,102 @@
+<h2 *ngIf="category != ''">
+  Category <b>{{ category }}</b>
+</h2>
+<div class="container">
+  <div class="row cat-menu" *ngIf="filt != 'disc'">
+    <div class="col-12 col-sm-6">
+      <div class="card border-light">
+        <div class="card-body">
+          <h5 class="card-title">Categories</h5>
+          <ul class="list-group text-gray">
+            <li
+              class="list-group-item d-flex justify-content-between align-items-center border-0 py-1 px-0 font-small"
+            >
+              <a
+                class="nav-link mx-2 text-uppercase"
+                (click)="getProducts(1, 1)"(click)="category=''"
+                >All</a
+              >
+            </li>
+            <li
+              *ngFor="let category of categories"
+              class="list-group-item d-flex justify-content-between align-items-center border-0 py-1 px-0 font-small"
+            >
+              <a
+                class="nav-link mx-2 text-uppercase"
+                (click)="getCatProduct(category.id)"
+                >{{ category.name }}</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="product-list-wrapper">
+      <h1></h1>
+      <div class="row">
+        <div class="col-sm-3" *ngFor="let item of products">
+          <div class="product-item">
+            <div class="in-sale" *ngIf="item.discount_price">
+              <img src="../../assets/img/home/discount.png">
+            </div>
+            <a title="Show details" routerLink="/details/{{ item.id }}">
+              <mdb-carousel
+                [isControls]="false"
+                [animation]="'fade'"
+                data-mdb-interval="false"
+                *ngIf="item.img_url.length > 0"
+              >
+                <mdb-carousel-item *ngFor="let img of item.img_url">
+                  <img src="{{ imgPath + img.url }}" alt="" />
+                </mdb-carousel-item>
+              </mdb-carousel>
+
+              <img
+                *ngIf="item.img_url.length < 1"
+                src="{{ imgPath + noImg }}"
+                alt=""
+              />
+
+              <div class="product-details">
+                <h6 class="name-head">{{ item.title }}</h6>
+                
+              </div>
+            </a>
+
+            <div class="product-footer">
+              <a href="ss">
+                <mat-icon title="Add to wishlist">favorite</mat-icon></a
+              >
+              <div class="product-price" *ngIf="item.discount_price">
+                <h4>{{ item.discount_price }}€</h4>
+              </div>
+              <div class="product-price" *ngIf="!item.discount_price">
+                <h4>{{ item.list_price }}€</h4>
+              </div>
+              <a (click)="removeCart(item)" *ngIf="isOnCart(item)">
+                <mat-icon title="Remove to cart"
+                  >remove_shopping_cart</mat-icon
+                ></a
+              >
+              <a (click)="addCart(item)" *ngIf="!isOnCart(item)">
+                <mat-icon title="Remove to cart">add_shopping_cart</mat-icon></a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="nex-back" *ngIf="products.length > 0">
+      <button (click)="viewback()">
+        <mat-icon>arrow_back_ios</mat-icon>
+      </button>
+      <div *ngFor="let metas of meta"></div>
+      <button (click)="viewMore()">
+        <mat-icon>arrow_forward_ios</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

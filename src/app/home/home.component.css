@@ -1,0 +1,55 @@
+.carusel{
+   
+   margin: 0 auto;
+   max-height: 30em;
+}
+img{
+    width: 100%;
+    margin: 0 auto;
+    
+   
+    object-fit: contain;
+}
+
+.info-as{
+    width: 100%;
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    background-color: #ffc107;
+}
+
+.info-as .block{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    margin-top:1em;
+}
+
+.info-as .block img{
+    width: 4em;
+    height: 4em;
+    object-fit: contain;
+}
+.info-as .block p{
+    max-width: 50%;
+    margin:0 auto;
+    text-align: center;
+    text-overflow: ellipsis;
+}
+@media only screen and (max-width: 600px) {
+
+ .info-as{
+    flex-direction: column;
+    justify-content: center;
+ }
+
+}
+
+
+
+
+
+

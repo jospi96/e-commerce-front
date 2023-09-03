@@ -1,0 +1,280 @@
+<div (click)="input.value = ''" (click)="input1.value = ''">
+  <div class="superNav border-bottom py-2 bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 centerOnMobile">
+          <select class="me-3 border-0 bg-light">
+            <option value="en-us">EN-US</option>
+          </select>
+          <span
+            class="d-none d-lg-inline-block d-md-inline-block d-sm-inline-block d-xs-none me-3"
+            ><strong>info@somedomain.com</strong></span
+          >
+          <span class="me-3"
+            ><i class="fa-solid fa-phone me-1 text-warning"></i>
+            <strong>1-800-123-1234</strong></span
+          >
+        </div>
+        <div
+          class="col-lg-6 col-md-6 col-sm-12 col-xs-12 d-none d-lg-block d-md-block-d-sm-block d-xs-none text-end"
+        >
+          <span class="me-3"
+            ><i class="fa-solid fa-truck text-muted me-1"></i
+            ><a class="text-muted" href="#">Shipping</a></span
+          >
+          <span class="me-3"
+            ><i class="fa-solid fa-file text-muted me-2"></i
+            ><a class="text-muted" href="#">Policy</a></span
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+  <nav
+    class="navbar navbar-expand-lg bg-white sticky-top navbar-light p-3 shadow-sm"
+  >
+    <div class="container">
+      <a class="navbar-brand" href="#"
+        ><i class="fa-solid fa-shop me-2"></i> <strong>Jospi shop</strong></a
+      >
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNavDropdown"
+        aria-controls="navbarNavDropdown"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="mx-auto my-3 d-lg-none d-sm-block d-xs-block">
+        <div class="input-group">
+          <span class="border-warning input-group-text bg-warning text-white"
+            ><i class="fa-solid fa-magnifying-glass"></i
+          ></span>
+          <input
+            type="text"
+            #input1
+            (input)="search(input1.value)"
+            class="form-control border-warning"
+            style="color: #7a7a7a"
+          />
+          <button class="btn btn-warning text-white">Search</button>
+        </div>
+        <div
+          class="search-result border-warning centerOnMobile example-form"
+          *ngIf="
+            products != undefined && (input.value != '' || input1.value != '')
+          "
+        >
+          <li
+            *ngFor="let item of products"
+            (click)="openDetails(item.id)"
+            (click)="input.value = ''"
+          >
+            <div *ngIf="item.img_url.length > 0">
+              <img src="{{ imgPath + item.img_url[0].url }}" />
+            </div>
+            <div *ngIf="item.img_url.length < 1">
+              <img src="{{ imgPath + noImg }}" />
+            </div>
+
+            {{ item.title }}
+          </li>
+        </div>
+      </div>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <div class="ms-auto d-none d-lg-block">
+          <div class="input-group">
+            <span class="border-warning input-group-text bg-warning text-white"
+              ><i class="fa-solid fa-magnifying-glass"></i
+            ></span>
+
+            <input
+              #input
+              (input)="search(input.value)"
+              type="text"
+              class="form-control border-warning"
+              style="color: #7a7a7a"
+            />
+            <button class="btn btn-warning text-white">Search</button>
+          </div>
+          <div
+            class="search-result border-warning centerOnMobile example-form"
+            *ngIf="
+              products != undefined && (input.value != '' || input1.value != '')
+            "
+          >
+            <li
+              *ngFor="let item of products"
+              (click)="openDetails(item.id)"
+              (click)="input.value = ''"
+            >
+              <div *ngIf="item.img_url.length > 0">
+                <img src="{{ imgPath + item.img_url[0].url }}" />
+              </div>
+              <div *ngIf="item.img_url.length < 1">
+                <img src="{{ imgPath + noImg }}" />
+              </div>
+
+              {{ item.title }}
+            </li>
+          </div>
+        </div>
+
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link mx-2 text-uppercase" [routerLink]="['/home']"
+              >Home</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link mx-2 text-uppercase" [routerLink]="['/product']"
+              >Products</a
+            >
+          </li>
+
+          <li class="nav-item main-menu with-submenu">
+            <a class="nav-link mx-2 text-uppercase" href="#">Categories</a>
+
+            <ul class="submenu">
+              <li *ngFor="let cat of categories">{{ cat.name }}</li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link mx-2 text-uppercase" href="#">About</a>
+          </li>
+        </ul>
+
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item main-menu with-submenu">
+            <a class="nav-link mx-2 text-uppercase" [routerLink]="['/cart']"
+              ><i class="fa-solid fa-cart-shopping me-1"></i>
+              <mat-icon
+                *ngIf="cartItem > 0"
+                matBadge="{{ cartItem }}"
+                matBadgePosition="above"
+                matBadgeColor="warn"
+                >shopping_cart</mat-icon
+              >
+              <mat-icon *ngIf="cartItem < 1">shopping_cart</mat-icon>
+            </a>
+            <ul class="submenu" id="cart">
+              <h2><b>Cart</b></h2>
+              <div class="cart-head"> 
+                <a [routerLink]="['cart']">View Cart</a>
+                <a [routerLink]="['checkout']">Checkout</a>
+              
+              </div>
+             
+              <div class="cart-li" *ngIf="cart">
+                <li *ngFor="let item of cart.products">
+                  <div *ngIf="item.img_url.length > 0">
+                    <img src="{{ imgPath + item.img_url[0].url }}" />
+                  </div>
+                  <div *ngIf="item.img_url.length < 1">
+                    <img src="{{ imgPath + noImg }}" />
+                  </div>
+                  <div>
+                    {{ item.title }}<br />
+                    <h6 style="text-align: center">Qty.{{ item.cartQty }}</h6>
+                  </div>
+
+                  <button class="btn btn-link" (click)="removeCart(item)">
+                    <mat-icon>delete</mat-icon>
+                  </button>
+                </li>
+              </div>
+              <div class="cart-li" *ngIf="cartItem < 1">
+               <h3>Cart is empty</h3>
+              </div>
+             
+            </ul>
+          </li>
+          <li *ngIf="user" class="nav-item with-submenu">
+            <a class="nav-link mx-2 text-uppercase" href="#"
+              ><i class="fa-solid fa-circle-user me-1"></i> Account</a
+            >
+            <ul class="submenu">
+              <li >Profile</li>
+              <li >My Order</li>
+              <li (click)="logout()">Logout</li>
+
+            </ul>
+          </li>
+          <li *ngIf="!user" class="nav-item ">
+            <a class="nav-link mx-2 text-uppercase" [routerLink]="['/login']"
+              ><i class="fa-solid fa-circle-user me-1"></i> Login</a
+            >
+            
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <router-outlet></router-outlet>
+</div>
+<!-- Footer -->
+<footer class="text-center text-lg-start bg-light text-muted">
+  <!-- Section: Links  -->
+  <section class="footer">
+    <div class="container text-center text-md-start mt-5">
+      <!-- Grid row -->
+      <div class="row mt-3">
+        <!-- Grid column -->
+        <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+          <!-- Content -->
+          <h6 class="text-uppercase fw-bold mb-4">
+            <i class="fas fa-gem me-3"></i>Company name
+          </h6>
+          <p>
+            Here you can use rows and columns to organize your footer content.
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+          </p>
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+          <!-- Links -->
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4"></div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+          <!-- Links -->
+          <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
+          <p><i class="fas fa-home me-3"></i> New York, NY 10012, US</p>
+          <p>
+            <i class="fas fa-envelope me-3"></i>
+            info@example.com
+          </p>
+          <p><i class="fas fa-phone me-3"></i> + 01 234 567 88</p>
+          <p><i class="fas fa-print me-3"></i> + 01 234 567 89</p>
+        </div>
+        <!-- Grid column -->
+      </div>
+      <!-- Grid row -->
+    </div>
+  </section>
+  <!-- Section: Links  -->
+
+  <!-- Copyright -->
+  <div class="text-center p-4">
+    © 2023 Copyright:
+    <a
+      class="text-reset fw-bold"
+      href="https://www.linkedin.com/in/josu%C3%A9-pizzo-452598150/"
+      >Josuè Pizzo</a
+    >
+  </div>
+  <!-- Copyright -->
+</footer>
+<!-- Footer -->

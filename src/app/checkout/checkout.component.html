@@ -1,0 +1,286 @@
+
+
+<div class="page" *ngIf="!order">
+  <div class="row">
+    <div class="col-md-4 order-md-2 mb-4 cart">
+      <div id="dropin-container"></div>
+      <button (click)="createOrder($event,checkoutForm)"
+       [disabled]="!checkoutForm.valid"
+       id="submit-button" class="button button--small button--green">
+       Proced to pay</button>
+        </div>
+
+      <h4 class="d-flex justify-content-between align-items-center mb-3">
+        <span class="text-muted">Your cart</span>
+        <span class="badge badge-secondary badge-pill">3</span>
+      </h4>
+      <ul class="list-group mb-3">
+        <li 
+        class="list-group-item d-flex justify-content-between lh-condensed"
+        *ngFor="let item of cart.products ">
+          <div>
+            <h6 class="my-0">{{item.title}}</h6>
+            <small class="text-muted">{{item.description}}</small>
+          </div>
+          <span *ngIf="item.discount_price" 
+          class="text-muted">€{{item.discount_price}}</span>
+          <span *ngIf="!item.discount_price" 
+          class="text-muted">€{{item.list_price}}</span>
+        </li>
+       
+        <li class="list-group-item d-flex justify-content-between bg-light">
+          <div class="text-success">
+            <h6 class="my-0">Promo code</h6>
+            <small>{{cart.discount}}</small>
+          </div>
+          <span class="text-success">-$5</span>
+        </li>
+        <li class="list-group-item d-flex justify-content-between">
+          <span>Total (Euro)</span>
+          <strong>€{{cart.total}}</strong>
+        </li>
+      </ul>
+    </div>
+    
+
+    
+  
+
+  <div class="conteiner">
+    <form class="row g-3" name="checkoutForm" #checkoutForm="ngForm">
+      <div class="col-md-6">
+        <label for="name" class="form-label">Name*</label>
+        <input
+          type="name"
+          class="form-control"
+          id="name"
+          #name="ngModel"
+          name="name"
+          ngModel="{{ user.name }}"
+          required
+          minlength="2"
+          maxlength="15"
+        />
+        <div class="error" *ngIf="name.value.length < 2 && name.touched">
+          Insert an Name
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <label for="last-name" class="form-label">Last name*</label>
+        <input
+          type="name"
+          class="form-control"
+          id="last-name"
+          #lastName="ngModel"
+          name="lastName"
+          ngModel="{{ user.surname }}"
+          required
+          minlength="2"
+          maxlength="15"
+        />
+
+        <div
+          class="error"
+          *ngIf="lastName.value.length < 2 && lastName.touched"
+        >
+          Insert an Surname
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <label for="email" class="form-label">Email*</label>
+        <input
+          name="email"
+          #email="ngModel"
+          required
+          ngModel="{{ user.email }}"
+          type="email"
+          id="form2Example11"
+          class="form-control"
+          placeholder="Email address"
+          email
+        />
+        <div class="error" *ngIf="email.invalid && email.touched">
+          Your email is invalid
+        </div>
+      </div>
+      <div class="col-md-6">
+        <label for="inputTel" class="form-label">Phone</label>
+        <input
+          type="tel"
+          class="form-control"
+          id="tel"
+          #tel="ngModel"
+          ngModel="{{ user.phone }}"
+          name="tel"
+          maxlength="10"
+          minlength="10"
+          required
+        />
+        <div class="error" *ngIf="!tel.value.valid && tel.touched">
+          Please enter your phone number
+        </div>
+      </div>
+
+      <div class="col-12">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          name="check"
+          #checkBilling
+          id="flexCheckDefault"
+        />
+        <label class="form-check-label" for="flexCheckDefault">
+          Is a Billing</label
+        >
+      </div>
+
+      <div class="billing-address row g-3" *ngIf="checkBilling.checked">
+        <div class="col-md-6">
+          <label for="inputVat" class="form-label">Vat Number</label>
+          <input
+            type="text"
+            class="form-control"
+            id="vatNumber"
+            name="vatNumber"
+            #vatNumber="ngModel"
+            ngModel="{{ user.vat_number }}"
+            placeholder="IT000000000000"
+            minlength="12"
+            maxlength="12"
+          />
+        </div>
+        <div class="col-md-6">
+          <label for="pec" class="form-label">Business Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="businessName"
+            #businessName="ngModel"
+            ngModel
+            name="businessName"
+            placeholder="Inser your Pec"
+          />
+        </div>
+
+        <h3>Invoice Address</h3>
+        <div class="col-12">
+          <label for="inputAddress" class="form-label">Address</label>
+          <input
+            name="invoiceAddress"
+            #invoiceAddress="ngModel"
+            ngModel="{{ user.billing_address }}"
+            type="text"
+            class="form-control"
+            id="inputAddress"
+            placeholder="1234 Main St"
+          />
+        </div>
+
+        <div class="col-md-6">
+          <label for="inputCity" class="form-label">City</label>
+          <input
+            name="invoicecity"
+            #invoicecity="ngModel"
+            ngModel
+            ngModel="{{ user.billing_city }}"
+            type="text"
+            class="form-control"
+            id="inputCity"
+          />
+        </div>
+        <div class="col-md-4">
+          <label for="inputState" class="form-label">State</label>
+          <select
+            name="invoiceCountry"
+            #invoiceCountry="ngModel"
+            ngModel
+            id="inputState"
+            class="form-select"
+          >
+            <option selected>{{ user.billing_cauntry }}</option>
+            <option>Italy</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <label for="inputZip" class="form-label">Zip</label>
+          <input
+            type="number"
+            minlength="5"
+            maxlength="5"
+            name="invoicePostCode"
+            #invoicePostCode="ngModel"
+            ngModel="{{ user.billing_post_code }}"
+            class="form-control"
+            id="inputZip"
+          />
+        </div>
+      </div>
+
+      <h3>Shipping Address</h3>
+      <div class="col-12">
+        <label for="inputAddress" class="form-label">Address</label>
+        <input
+          name="shippingAddress"
+          #shippingAddress="ngModel"
+          ngModel="{{ user.shipping_address }}"
+          type="text"
+          class="form-control"
+          id="inputAddress"
+          placeholder="1234 Main St"
+          required
+        />
+      </div>
+
+      <div class="col-md-6">
+        <label for="inputCity" class="form-label">City</label>
+        <input
+          name="shippingcity"
+          #shippingcity="ngModel"
+          ngModel="{{ user.shipping_city }}"
+          type="text"
+          class="form-control"
+          id="inputCity"
+          required
+        />
+      </div>
+      <div class="col-md-4">
+        <label for="inputState" class="form-label">State</label>
+        <select
+          name="shippingCountry"
+          #shippingCountry="ngModel"
+          ngModel="{{ user.shipping_country }}"
+          id="inputState"
+          class="form-select"
+          required
+        >
+          <option selected>{{ user.shipping_country }}</option>
+          <option>Italy</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <label for="inputZip" class="form-label">Zip</label>
+        <input
+          name="shippingPostCode"
+          #shippingPostCode="ngModel"
+          ngModel="{{ user.shipping_post_code }}"
+          type="number"
+          minlength="5"
+          maxlength="5"
+          class="form-control"
+          id="inputZip"
+          required
+        />
+      </div>
+     
+       
+    </form>
+
+    
+  </div>
+</div>
+
+<div *ngIf="order">
+<app-payament Order=order></app-payament>
+  </div>

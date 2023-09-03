@@ -1,0 +1,27 @@
+.conteiner{
+    margin-top: 4em!important;
+   max-width: 40%;
+   padding: 0;
+   margin: 0 auto;
+}
+.error {
+    font-size: 10px;
+    color: red;
+    margin-bottom: 0;
+}
+.gradient-custom-2 {
+   
+    background-color: rgb(144, 6, 6);
+    }
+    
+    @media (min-width: 768px) {
+    .gradient-form {
+    height: 100vh !important;
+    }
+    }
+    @media (min-width: 769px) {
+    .gradient-custom-2 {
+    border-top-right-radius: .3rem;
+    border-bottom-right-radius: .3rem;
+    }
+    }

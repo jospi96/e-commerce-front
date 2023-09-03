@@ -1,0 +1,84 @@
+<div class="snippet" *ngIf="!product">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div calss="product-body-container" *ngIf="product">
+  <meta name="description" content="{{ product.meta_description }}" />
+  <meta name="title" content="{{ product.meta_title }}" />
+  <div class="product-head">
+    <div class="img">
+      <mdb-carousel
+        [isControls]="false"
+        [animation]="'fade'"
+        data-mdb-interval="true"
+        *ngIf="product.img_url.length > 0"
+      >
+        <mdb-carousel-item *ngFor="let img of product.img_url">
+          <img src="{{ imgPath + img.url }}" alt="" />
+        </mdb-carousel-item>
+      </mdb-carousel>
+
+      <img
+        *ngIf="product.img_url.length < 1"
+        src="{{ imgPath + noImg }}"
+        alt=""
+      />
+    </div>
+    <div class="title-category-cart">
+      <h1>{{ product.title }}</h1>
+    
+      <div class="brand" *ngIf="product.brand.url">
+        <img src="{{ imgPath + product.brand.url }}" />
+      </div>
+      <div class="price" *ngIf="product.discount_price">
+        <s>{{ product.list_price }} </s>
+        <span>{{ product.discount_price }}</span>
+      </div>
+      <div calss="button-add-cart">
+        <div>
+          <div class="couter" >
+            <button (click)="removeCouter()" [disabled]="isOnCart()">
+              <mat-icon>remove</mat-icon>
+            </button>
+            <input value="{{ counter }}" type="number" disabled />
+            <button (click)="addCounter()" [disabled]="isOnCart()"><mat-icon>add</mat-icon></button>
+          </div>
+          <div class="qty-error">
+            {{ errQuant }}
+          </div>
+        </div>
+        <div class="btn-wish">
+            
+          <button  *ngIf="!isOnCart()" title="Add to cart" class="btn-cart btn-cart-add" (click)="addCart()" >
+            <mat-icon>add_shopping_cart</mat-icon>
+          </button>
+          <button  *ngIf="isOnCart()" title="Add to cart" class="btn-cart btn-cart-remove" (click)="removeCart()" >
+            <mat-icon>remove_shopping_cart</mat-icon>
+          </button>
+      
+          
+          <button class="wish" title="Add to whislist">
+            <mat-icon>favorite</mat-icon>
+          </button>
+        </div>
+      
+      </div>
+      <div class="stock">In stock: {{ product.quantity }}</div>
+      <div class="categories" >
+        <ul id="cat">
+          <li>Categories:</li>
+          <li *ngFor="let cat of product.categories">
+            {{ cat.name | lowercase }}
+          </li>
+        </ul>
+       
+      </div>
+      
+    
+    </div>
+  </div>
+  <div class="description">
+    <h3><b>Description:</b></h3>
+    <p>{{ product.description }}</p>
+  </div>
+</div>

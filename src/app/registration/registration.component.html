@@ -1,0 +1,302 @@
+<div class="conteiner">
+  <h3>Anagrafic Data</h3>
+  <form class="row g-3" name="form" #registerForm="ngForm">
+    <div class="col-md-6">
+      <label for="name" class="form-label">Name*</label>
+      <input
+        type="name"
+        class="form-control"
+        id="name"
+        #name="ngModel"
+        name="name"
+        ngModel
+        required
+        minlength="2"
+        maxlength="15"
+      />
+      <div class="error" *ngIf="name.value.length < 2 && name.touched">
+        Insert an Name
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <label for="last-name" class="form-label">Last name*</label>
+      <input
+        type="name"
+        class="form-control"
+        id="name"
+        #lastName="ngModel"
+        name="lastName"
+        ngModel
+        required
+        minlength="2"
+        maxlength="15"
+      />
+
+      <div class="error" *ngIf="lastName.value.length < 2 && lastName.touched">
+        Insert an Surname
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <label for="email" class="form-label">Email*</label>
+      <input
+        name="email"
+        #email="ngModel"
+        required
+        ngModel
+        type="email"
+        id="form2Example11"
+        class="form-control"
+        placeholder="Email address"
+        email
+      />
+      <div class="error" *ngIf="email.invalid && email.touched">
+        Your email is invalid
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <label for="inputEmail4" class="form-label">Confirm Email*</label>
+      <input
+        name="confirmEmail"
+        #confirmEmail="ngModel"
+        required
+        ngModel
+        type="email"
+        id="form2Example11"
+        class="form-control"
+        placeholder="Repit your email address"
+        confirmEmail
+      />
+
+      <div
+        class="error"
+        *ngIf="confirmEmail.value != email.value && confirmEmail.touched"
+      >
+        Your emails don't be match
+      </div>
+    </div>
+    <div class="col-md-6">
+      <label for="inputPassword4" class="form-label">Password*</label>
+      <input
+        type="password"
+        class="form-control"
+        required
+        ngModel
+        name="password"
+        #password="ngModel"
+        type="password"
+        id="form2Example11"
+        class="form-control"
+        placeholder="Inserve your password"
+        password
+        [pattern]="
+          '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}$'
+        "
+      />
+
+      <div class="error" *ngIf="password.invalid && password.touched">
+        Your password must be composed of at least 8 characters from a
+        lowercase, uppercase letter and a symbol
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <label for="inputPassword4" class="form-label">Confirm Password*</label>
+      <input
+        type="password"
+        class="form-control"
+        required
+        ngModel
+        name="confirmPassword"
+        #confirmPassword="ngModel"
+        type="password"
+        id="form2Example11"
+        class="form-control"
+        placeholder="Inserve your password"
+        password
+      />
+
+      <div
+        class="error"
+        *ngIf="
+          confirmPassword.value != password.value && confirmPassword.touched
+        "
+      >
+        Your password don't be match
+      </div>
+    </div>
+    <div class="col-md-6">
+      <label for="inputTel" class="form-label">Phone</label>
+      <input
+        type="tel"
+        class="form-control"
+        id="tel"
+        #tel="ngModel"
+        ngModel
+        name="tel"
+        maxlength="10"
+        minlength="10"
+        required
+      />
+      <div class="error" *ngIf="!tel.value.valid && tel.touched">
+        Please enter your phone number
+      </div>
+    </div>
+
+    <div class="col-12">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        name="check"
+        #checkBilling
+        id="flexCheckDefault"
+      />
+      <label class="form-check-label" for="flexCheckDefault">
+        Is a Billing</label
+      >
+    </div>
+
+    <div class="billing-address row g-3" *ngIf="checkBilling.checked">
+      <div class="col-md-6">
+        <label for="inputVat" class="form-label">Vat Number</label>
+        <input
+          type="text"
+          class="form-control"
+          id="vatNumber"
+          name="vatNumber"
+          #vatNumber="ngModel"
+          ngModel
+          placeholder="IT000000000000"
+          minlength="12"
+          maxlength="12"
+        />
+      </div>
+      <div class="col-md-6">
+        <label for="pec" class="form-label">Business Name</label>
+        <input
+          type="text"
+          class="form-control"
+          id="businessName"
+          #businessName="ngModel"
+          ngModel
+          name="businessName"
+          placeholder="Inser your Pec"
+        />
+      </div>
+
+      <h3>Invoice Address</h3>
+      <div class="col-12">
+        <label for="inputAddress" class="form-label">Address</label>
+        <input
+          name="invoiceAddress"
+          #invoiceAddress="ngModel"
+          ngModel
+          type="text"
+          class="form-control"
+          id="inputAddress"
+          placeholder="1234 Main St"
+        />
+      </div>
+     
+      <div class="col-md-6">
+        <label for="inputCity" class="form-label">City</label>
+        <input
+        name="invoicecity"
+        #invoicecity="ngModel"
+        ngModel
+        
+        type="text" class="form-control" id="inputCity" />
+      </div>
+      <div class="col-md-4">
+        <label for="inputState" class="form-label">State</label>
+        <select 
+        name="invoiceCountry"
+        #invoiceCountry="ngModel"
+        ngModel
+        id="inputState" class="form-select">
+          <option selected>Choose...</option>
+          <option>Italy</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <label for="inputZip" class="form-label">Zip</label>
+        <input
+        type="number"
+        minlength="5"
+        maxlength="5"
+        name="invoicePostCode"
+        #invoicePostCode="ngModel"
+        ngModel
+        
+         class="form-control" id="inputZip" />
+      </div>
+    </div>
+
+    <h3>Shipping Address</h3>
+    <div class="col-12">
+      <label for="inputAddress" class="form-label">Address</label>
+      <input
+        name="shippingAddress"
+        #shippingAddress="ngModel"
+        ngModel
+        type="text"
+        class="form-control"
+        id="inputAddress"
+        placeholder="1234 Main St"
+      />
+    </div>
+   
+    <div class="col-md-6">
+      <label for="inputCity" class="form-label">City</label>
+      <input
+      name="shippingcity"
+      #shippingcity="ngModel"
+      ngModel
+      
+      type="text" class="form-control" id="inputCity" />
+    </div>
+    <div class="col-md-4">
+      <label for="inputState" class="form-label">State</label>
+      <select 
+      name="shippingCountry"
+      #shippingCountry="ngModel"
+      ngModel
+      id="inputState" class="form-select">
+        <option selected>Choose...</option>
+        <option>Italy</option>
+      </select>
+    </div>
+    <div class="col-md-2">
+      <label for="inputZip" class="form-label">Zip</label>
+      <input
+      name="shippingPostCode"
+      #shippingPostCode="ngModel"
+      ngModel
+      type="number"
+      minlength="5"
+      maxlength="5"
+     class="form-control" id="inputZip" />
+    </div>
+    <div class=" error">
+      {{message}}
+    </div>
+ 
+    <div class="col-12">
+
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="
+          !registerForm.valid ||
+          !confirmPassword.value == password.value ||
+          !confirmEmail.value == email.value
+        "
+        (click)="register(registerForm)"
+      >
+        Sign in
+      </button>
+    </div>
+  </form>
+</div>
